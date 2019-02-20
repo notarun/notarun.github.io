@@ -1,0 +1,112 @@
+:root {
+  --body-bg: #2c2d30;
+  --term-head-fg: #b8c2c6;
+  --term-head-bg: #000000;
+  --term-body-fg: #cccccc;
+  --term-body-bg: #181818;
+  --term-green: #66aa11;
+  --link: #66aa11;
+  --term-radius: 4px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+  font-size: 16px;
+  background-color: var(--term-body-bg);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--link);
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+a:hover { text-decoration: none; }
+
+
+.terminal-window {
+  margin: auto;
+  max-width: 680px;
+  color: var(--term-body-fg);
+  background-color: var(--term-body-bg);
+  border-radius: var(--term-radius);
+}
+
+.terminal-margin { margin: 1em; }
+
+
+/* terminal prompt */
+.terminal-prompt::before {
+  content: '$ ';
+  font-weight: bold;
+  color: var(--term-green);
+}
+
+.terminal-prompt { margin-bottom: 1em; }
+
+
+/* terminal output */
+.terminal-output {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.output-text {
+  margin-left: 1em;
+  max-width: 500px;
+}
+
+.output-image { margin: auto; }
+.terminal-prompt > strong, .output-text strong { color: var(--term-green); }
+
+
+/* error page */
+.error-page {
+  text-align: center;
+}
+
+
+/* media queries */
+@media (min-width: 700px) {
+
+  body { background-color: var(--body-bg); }
+
+  .site-wrapper {
+    height: 100vh;
+    display: flex;
+  }
+
+  /* terminal window */
+  .terminal-window::before {
+    content: '• • •';
+    display: block;
+    padding: 0.5em;
+    text-align: right;
+    font-weight: 900;
+    color: var(--term-head-fg);
+    background-color: var(--term-head-bg);
+    border-radius: var(--term-radius) var(--term-radius) 0 0;
+  }
+}
+
+
+/* blink animation */
+.blink > span {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
