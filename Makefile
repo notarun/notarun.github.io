@@ -1,4 +1,4 @@
-build:
+site: clean
 	yarn install && yarn run build
 
 clean:

@@ -1,13 +1,8 @@
-const fs = require('fs');
+const site = require('./site.js');
 
-// FIXME: IMPLEMENT!!!!
-
-const OUTPUT_DIR = 'site';
-
-fs.mkdir(`./${OUTPUT_DIR}`, err => {
-  if (err) {
-    throw err;
-  }
-
-  console.log('Directory created');
+new site({
+  title: 'Raging Pointer',
+  url: 'https://ragingpointer.com/',
+  sourceDir: 'source/',
+  outputDir: 'site/',
 });
