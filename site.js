@@ -29,7 +29,7 @@ class Site {
 
       path.extname(sourceFile) === '.md'
         ? this._htmlify(sourceFile, outputFile)
-        : this._cpr(sourceDir, outputFile);
+        : fs.copyFileSync(src, dest);
 
       console.log(sourceFile, ' -> ', outputFile);
     });
@@ -59,10 +59,12 @@ class Site {
 
   _evaluateOutputPath(filePath) {
     let split = filePath.split(path.sep);
-    let basename = path.basename(filePath, '.md');
-
     split[0] = this.outputDir;
-    split[split.length - 1] = `${basename}.html`;
+
+    if (path.extname(filePath) === '.md') {
+      let basename = path.basename(filePath, '.md');
+      split[split.length - 1] = `${basename}.html`;
+    }
 
     return path.join(...split);
   }
@@ -75,10 +77,6 @@ class Site {
     const html = snarkdown(md);
 
     fs.writeFileSync(dest, html);
-  }
-
-  _cpr(src, dest) {
-    // FIXME: implement recursive copy
   }
 
 }
