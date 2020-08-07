@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const snarkdown = require('snarkdown');
+
 class Site {
 
   constructor(config) {
@@ -19,11 +21,11 @@ class Site {
     ]);
 
     this._findFiles(this.sourceDir).forEach(sourceFile => {
-      this._mkDirs([
-        path.dirname(sourceFile)
-      ]);
-
       const outputFile = this._evaluateOutputPath(sourceFile);
+
+      this._mkDirs([
+        path.dirname(outputFile)
+      ]);
 
       path.extname(sourceFile) === '.md'
         ? this._htmlify(sourceFile, outputFile)
@@ -57,13 +59,22 @@ class Site {
 
   _evaluateOutputPath(filePath) {
     let split = filePath.split(path.sep);
+    let basename = path.basename(filePath, '.md');
+
     split[0] = this.outputDir;
+    split[split.length - 1] = `${basename}.html`;
 
     return path.join(...split);
   }
 
   _htmlify(src, dest) {
-    // FIXME: add md to html generation logic here
+    const md = fs.readFileSync(src, {
+      encoding: 'utf8'
+    });
+
+    const html = snarkdown(md);
+
+    fs.writeFileSync(dest, html);
   }
 
   _cpr(src, dest) {

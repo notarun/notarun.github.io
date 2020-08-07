@@ -1,12 +1,15 @@
 {
   "name": "notarun.github.io",
   "scripts": {
-      "build": "node index.js"
+    "build": "node index.js"
   },
   "version": "0.0.0",
   "description": "Raging Pointer",
   "main": "index.js",
   "repository": "git://github.com/notarun/notarun.github.io",
   "author": "Arun S. Negi <arunsnegi@protonmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "snarkdown": "^1.2.2"
+  }
 }
