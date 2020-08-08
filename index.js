@@ -5,4 +5,7 @@ new site({
   url: 'https://ragingpointer.com/',
   sourceDir: 'source/',
   outputDir: 'site/',
+  indexOf: [
+    'source/logs/',
+  ]
 });

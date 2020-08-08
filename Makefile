@@ -4,4 +4,4 @@ site: clean
 clean:
 	rm -rf site
 
-.PHONY: build clean
+.PHONY: clean
