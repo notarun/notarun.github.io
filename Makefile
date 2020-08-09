@@ -1,7 +1,7 @@
-site: clean
+_site: clean
 	yarn install && yarn run build
 
 clean:
-	rm -rf site
+	rm -rf _site
 
 .PHONY: clean

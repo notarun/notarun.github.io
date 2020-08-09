@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+razorleaf@^5.3.3:
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/razorleaf/-/razorleaf-5.3.3.tgz#113669ff633f527e71cec1e4aece13fa2332802b"
+  integrity sha512-gMltDlSh5+DDIJl55RtgSJ8mdPbfP7T4oVXwWI6jM2RhODo8S5xyCigMzHaHfITKoytiZHBC3Wtr6/04CwOZwA==
+
 snarkdown@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/snarkdown/-/snarkdown-1.2.2.tgz#0cfe2f3012b804de120fc0c9f7791e869c59cc74"

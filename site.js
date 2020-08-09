@@ -2,15 +2,28 @@ const fs = require('fs');
 const path = require('path');
 
 const snarkdown = require('snarkdown');
+const { Markup } = require('razorleaf');
+const DirectoryLoader = require('razorleaf/directory-loader');
 
 class Site {
 
   constructor(config) {
     this.title = config.title || 'New Site';
     this.url = config.url || 'localhost';
-    this.sourceDir = config.sourceDir || 'source/';
-    this.outputDir = config.site || 'site/';
-    this.indexOf = config.indexOf || ['source/blog'];
+    this.sourceDir = config.sourceDir || '_source/';
+    this.outputDir = config.site || '_site/';
+    this.indexOf = config.indexOf || ['_source/blog'];
+
+    this.stylesheet = fs.readFileSync(config.stylesheet || '_css/main.css', {
+      encoding: 'utf8'
+    });
+
+    this.rl = new DirectoryLoader(config.templateDir || '_templates/', {
+      globals: {
+        siteTitle: this.title,
+        stylesheet: Markup.unsafe(this.stylesheet),
+      }
+    });
 
     this._generate();
   }
@@ -81,7 +94,10 @@ class Site {
       encoding: 'utf8'
     });
 
-    const html = snarkdown(md);
+    const html = this.rl.load('post')({
+      pageTitle: this._extractMetadata(src).title || '',
+      content: Markup.unsafe(snarkdown(md)),
+    });
 
     fs.writeFileSync(dest, html);
   }
@@ -100,14 +116,15 @@ class Site {
       .map(file => this._extractMetadata(file));
 
     const outputPath = this._evaluateOutputPath(dir);
+    const html = this.rl.load('posts')({
+      posts: indices
+    });
 
-    // FIXME: Add a templating engine
-    // const html = '';
-    // fs.writeFileSync(outputPath, html);
+    fs.writeFileSync(outputPath, html);
   }
 
   _extractMetadata(mdFile) {
-    let metadata = { title: '', basename: '' };
+    let metadata = { title: '', author: 'anon' };
 
     const md = fs.readFileSync(mdFile, { encoding: 'utf8' });
     const comment = /<!--[^>]*-->/.exec(md) || null;
@@ -123,6 +140,10 @@ class Site {
         console.error(`${mdFile}: Invalid metadata format.`);
       }
     }
+
+    metadata.path = path.join(
+      ...this._evaluateOutputPath(mdFile).split(path.sep).slice(2)
+    );
 
     return metadata;
   }

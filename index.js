@@ -1,11 +1,13 @@
-const site = require('./site.js');
+const Site = require('./site.js');
 
-new site({
-  title: 'Raging Pointer',
+new Site({
+  title: 'Raging pointer',
   url: 'https://ragingpointer.com/',
-  sourceDir: 'source/',
-  outputDir: 'site/',
+  sourceDir: '_source/',
+  outputDir: '_site/',
+  templateDir: '_templates',
+  stylesheet: '_css/main.css',
   indexOf: [
-    'source/logs/',
-  ]
+    '_source/blog/',
+  ],
 });
